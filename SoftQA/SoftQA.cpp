@@ -77,3 +77,74 @@ void createMainMatrix(complex<double>(*matrix)[MAXSIZE_STR], size_t n, complex<d
 	}
 }
 
+/*!	Создать частную матрицу для вычисления ее определителя */
+void createPersonalMatrix(complex<double>(*matrix)[MAXSIZE_STR], complex<double>* Z, float U, int num, int branchCount)
+{
+	if (branchCount == 3)
+	{
+		if (num == 0)
+		{
+			matrix[0][0] = complex<double>(0, 0);
+			matrix[0][1] = complex<double>(1, 0);
+			matrix[0][2] = complex<double>(-1, 0);
+
+			matrix[1][0] = complex<double>(U, 0);
+			matrix[1][1] = Z[1];
+			matrix[1][2] = complex<double>(0, 0);
+
+			matrix[2][0] = complex<double>(0, 0);
+			matrix[2][1] = Z[1];
+			matrix[2][2] = Z[2];
+		}
+		else if (num == 1)
+		{
+			matrix[0][0] = complex<double>(1, 0);
+			matrix[0][1] = complex<double>(0, 0);
+			matrix[0][2] = complex<double>(-1, 0);
+
+			matrix[1][0] = Z[0];
+			matrix[1][1] = complex<double>(U, 0);
+			matrix[1][2] = complex<double>(0, 0);
+
+			matrix[2][0] = complex<double>(0, 0);
+			matrix[2][1] = complex<double>(0, 0);
+			matrix[2][2] = Z[2];
+		}
+		else if (num == 2)
+		{
+			matrix[0][0] = complex<double>(1, 0);
+			matrix[0][1] = complex<double>(1, 0);
+			matrix[0][2] = complex<double>(0, 0);
+
+			matrix[1][0] = Z[0];
+			matrix[1][1] = Z[1];
+			matrix[1][2] = complex<double>(U, 0);
+
+			matrix[2][0] = complex<double>(0, 0);
+			matrix[2][1] = Z[1];
+			matrix[2][2] = complex<double>(0, 0);
+		}
+	}
+	else if (branchCount == 2)
+	{
+		if (num == 0)
+		{
+			matrix[0][0] = complex<double>(0, 0);
+			matrix[0][1] = complex<double>(1, 0);
+
+			matrix[1][0] = complex<double>(U, 0);
+			matrix[1][1] = Z[1];
+
+		}
+		else if (num == 1)
+		{
+			matrix[0][0] = complex<double>(1, 0);
+			matrix[0][1] = complex<double>(0, 0);
+
+			matrix[1][0] = Z[0];
+			matrix[1][1] = complex<double>(U, 0);
+
+		}
+	}
+
+}
