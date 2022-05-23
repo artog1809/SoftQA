@@ -148,3 +148,23 @@ void createPersonalMatrix(complex<double>(*matrix)[MAXSIZE_STR], complex<double>
 	}
 
 }
+
+
+/*!	Вычислить определитель переданной матрицы */
+void determinantOfMatrix(complex<double>* determinant, complex<double>(*matrix)[MAXSIZE_STR], int num, int branchCount)
+{
+
+	if (branchCount == 3)
+	{
+		complex<double>firstMinor = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]);
+		complex<double>secondMinor = matrix[1][0] * (matrix[0][1] * matrix[2][2] - matrix[0][2] * matrix[2][1]);
+		complex<double>thirdMinor = matrix[2][0] * (matrix[0][1] * matrix[1][2] - matrix[0][2] * matrix[1][1]);
+
+		determinant[num] = firstMinor - secondMinor + thirdMinor;
+	}
+
+	if (branchCount == 2)
+	{
+		determinant[num] = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+	}
+}
