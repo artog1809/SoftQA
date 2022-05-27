@@ -181,3 +181,4 @@ void currentValue(complex<double>* determinant, complex<double>* currentValue, i
 		k++;
 	}
 }
+
