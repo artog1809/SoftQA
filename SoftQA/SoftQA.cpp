@@ -168,3 +168,16 @@ void determinantOfMatrix(complex<double>* determinant, complex<double>(*matrix)[
 		determinant[num] = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 	}
 }
+
+
+/*!	Функция для подсчета тока в ветви */
+void currentValue(complex<double>* determinant, complex<double>* currentValue, int branchCount)
+{
+	int k = 1;
+	for (int i = 0; i < branchCount; i++)
+	{
+		currentValue[i] = determinant[k] / determinant[0];
+		cout << currentValue[i] << endl;
+		k++;
+	}
+}
