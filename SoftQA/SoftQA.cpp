@@ -198,3 +198,55 @@ void inputData(char(*buff)[MAXSIZE_STR], size_t n) {
 		cout << ("whoops");
 	}
 }
+
+/*!	Упорядочить полученные на входе значения, т.е присвоить переменным нужные значения в нужном формате */
+void orderingInputData(char(*buff)[MAXSIZE_STR], size_t n, float* R, float* L, float* C, int* V, int* U, int* resistCount,
+	int* condenCount, int* coilCount, char(*chain)[MAXSIZE_STR], int* Rk, int* Lk, int* Ck, int* branchCount) {
+
+	//Преобразование данных
+	char buffer[20];
+	*V = atof(&buff[0][2]);
+	*U = atof(&buff[1][2]);
+	strcpy_s(buffer, &buff[2][12]);
+	*resistCount = atoi(buffer);
+	strcpy_s(buffer, &buff[3][12]);
+	*condenCount = atoi(buffer);
+	strcpy_s(buffer, &buff[4][10]);
+	*coilCount = atoi(buffer);
+	*Rk = atoi(&buff[5][1]);
+	n = *Rk;
+	for (int i = 5; i < 5 + *resistCount; i++)
+	{
+		R[n - 1] = atof(&buff[i][3]);
+		n++;
+	}
+	*Ck = atoi(&buff[*resistCount + 5][1]);
+	n = *Ck;
+	for (int i = *resistCount + 5; i < 5 + *resistCount + *condenCount; i++)
+	{
+		C[n - 1] = atof(&buff[i][3]);
+		n++;
+	}
+	*Lk = atoi(&buff[*resistCount + *condenCount + 5][1]);
+	n = *Lk;
+	for (int i = *resistCount + *condenCount + 5; i < 5 + *resistCount + *condenCount + *coilCount; i++)
+	{
+		L[n - 1] = atof(&buff[i][3]);
+		n++;
+	}
+
+	int k = 0;
+	for (int i = *resistCount + *condenCount + *coilCount + 5; i < 20; i++)
+	{
+		strcpy_s(chain[k], buff[i]);
+		k++;
+
+	}
+
+	if (strlen(chain[0]) < 4)
+		*branchCount = 1;
+	else if (strlen(chain[0]) == 5)
+		*branchCount = 2;
+	else if (strlen(chain[0]) == 8)
+		*branchCount = 3;
+}
