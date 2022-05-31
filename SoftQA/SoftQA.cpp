@@ -1,7 +1,7 @@
 ﻿
 #include <iostream>
 #include "SoftQA.h"
-
+#include <fstream>
 
 int main()
 {
@@ -182,3 +182,19 @@ void currentValue(complex<double>* determinant, complex<double>* currentValue, i
 	}
 }
 
+/*!	Осуществить считывание входных данных из файла */
+void inputData(char(*buff)[MAXSIZE_STR], size_t n) {
+	ifstream fin("input1.csv");
+	if (fin.is_open())
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			fin.getline(buff[i], 81);
+		}
+		fin.close();
+	}
+	else
+	{
+		cout << ("whoops");
+	}
+}
