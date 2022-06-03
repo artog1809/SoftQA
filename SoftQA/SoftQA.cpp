@@ -250,3 +250,21 @@ void orderingInputData(char(*buff)[MAXSIZE_STR], size_t n, float* R, float* L, f
 	else if (strlen(chain[0]) == 8)
 		*branchCount = 3;
 }
+
+
+/*!	Записать величины полученных токов в выходной файл */
+void outputCurrentValues(complex<double>* currentValue, int branchCount)
+{
+	ofstream myfile("D:/4 term/knpo/knpo/knpo/output.txt");
+
+	if (!myfile)  //если файл не открылся
+	{
+		cout << "Sorry" << endl;
+	}
+	else
+		for (int i = 0; i < branchCount; i++)
+		{
+			myfile << currentValue[i] << endl;
+		}
+	myfile.close();
+}
