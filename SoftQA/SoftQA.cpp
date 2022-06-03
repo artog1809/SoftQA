@@ -3,11 +3,65 @@
 #include "SoftQA.h"
 #include <fstream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
-}
+using namespace std;
 
+int main(int argc, char* argv[])
+{
+	char buff[MAXNUM_STR][MAXSIZE_STR];
+	//Получение данных из входного файла
+	inputData(buff, MAXNUM_STR);
+	char chain[MAXNUM_STR][MAXSIZE_STR];
+	complex<double> matrix[MAXNUM_STR][MAXSIZE_STR];
+	complex<double> personalMatrix[MAXNUM_STR][MAXSIZE_STR];
+	float R[20] = { 0 };
+	float C[20] = { 0 };
+	float L[20] = { 0 };
+	int V = 0;
+	int U = 0;
+	int resistCount = 0;
+	int condenCount = 0;
+	int coilCount = 0;
+	int branchCount = 0;
+	complex <double> Z[MAXNUM_STR];
+	complex <double> determinant[MAXNUM_STR];
+	complex <double> currentValues[MAXNUM_STR];
+	int Rk = 0;
+	int Ck = 0;
+	int Lk = 0;
+	//Упорядочивание входных данных
+	orderingInputData(buff, MAXNUM_STR, R, L, C, &V, &U, &resistCount, &condenCount, &coilCount, chain, &Rk, &Lk, &Ck, &branchCount);
+
+
+	//Вычислить полное сопротивление всех ветвей
+	fullResistanceOfBranch(Z, R, C, L, V, Rk, Ck, Lk, branchCount);
+	int num = 0;
+	if (branchCount > 1)
+	{
+		//Создать основную матрицу
+		createMainMatrix(matrix, MAXNUM_STR, Z, branchCount);
+		//Посчитать определитель основной матрицы
+		determinantOfMatrix(determinant, matrix, num, branchCount);
+
+		//Для каждой побочной матрицы
+		for (num = 0; num < branchCount; num++)
+		{
+			//Создать побочную матрицу
+			createPersonalMatrix(personalMatrix, Z, U, num, branchCount);
+			//Посчитать ее определитель
+			determinantOfMatrix(determinant, personalMatrix, num + 1, branchCount);
+		}
+		//Вычислить значения токов в ветвях
+		currentValue(determinant, currentValues, branchCount);
+	}
+	else
+	{
+		complex <double> u(U, 0);
+		currentValues[0] = u / Z[0];
+	}
+
+	//Вывод полученных значений в текстовый файл
+	outputCurrentValues(currentValues, branchCount);
+}
 
 
 /*! Получить полные сопротивления каждой ветви */
