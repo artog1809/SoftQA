@@ -7,9 +7,20 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+
+	setlocale(LC_ALL, "Russian");
+
+	if (argc < 3) {
+
+		cout << "Недостаточное количество аргументов командной строки";
+		return 0;
+	}
+
+	string inputFile(argv[1]);
+	string outputFile(argv[2]);
 	char buff[MAXNUM_STR][MAXSIZE_STR];
 	//Получение данных из входного файла
-	inputData(buff, MAXNUM_STR);
+	inputData(buff, MAXNUM_STR, inputFile);
 	char chain[MAXNUM_STR][MAXSIZE_STR];
 	complex<double> matrix[MAXNUM_STR][MAXSIZE_STR];
 	complex<double> personalMatrix[MAXNUM_STR][MAXSIZE_STR];
@@ -60,7 +71,7 @@ int main(int argc, char* argv[])
 	}
 
 	//Вывод полученных значений в текстовый файл
-	outputCurrentValues(currentValues, branchCount);
+	outputCurrentValues(currentValues, branchCount, outputFile);
 }
 
 
@@ -237,8 +248,8 @@ void currentValue(complex<double>* determinant, complex<double>* currentValue, i
 }
 
 /*!	Осуществить считывание входных данных из файла */
-void inputData(char(*buff)[MAXSIZE_STR], size_t n) {
-	ifstream fin("input1.csv");
+void inputData(char(*buff)[MAXSIZE_STR], size_t n, string inputFile) {
+	ifstream fin(inputFile);
 	if (fin.is_open())
 	{
 		for (int i = 0; i < 20; i++)
@@ -307,9 +318,9 @@ void orderingInputData(char(*buff)[MAXSIZE_STR], size_t n, float* R, float* L, f
 
 
 /*!	Записать величины полученных токов в выходной файл */
-void outputCurrentValues(complex<double>* currentValue, int branchCount)
+void outputCurrentValues(complex<double>* currentValue, int branchCount, string outputFile)
 {
-	ofstream myfile("D:/4 term/knpo/knpo/knpo/output.txt");
+	ofstream myfile(outputFile);
 
 	if (!myfile)  //если файл не открылся
 	{

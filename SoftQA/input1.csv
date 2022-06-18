@@ -1,0 +1,13 @@
+V,50
+U,220
+resistCount,2
+condenCount,1
+coilCount,1
+R1,10
+R3,20
+C2,0.00003
+L3,0.03
+I1,I2,I3
+R1
+R2,C2
+R3,L3

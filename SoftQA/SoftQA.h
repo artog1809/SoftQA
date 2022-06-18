@@ -12,7 +12,7 @@ const int MAXSIZE_STR = 81;		//Максимальная длина строки
 /*!	Осуществить считывание входных данных из файла
 	\param[in/out] buff - данные из входного файла
 */
-void inputData(char(*buff)[MAXSIZE_STR], size_t n);
+void inputData(char(*buff)[MAXSIZE_STR], size_t n, string inputFile);
 
 
 
@@ -84,4 +84,4 @@ void currentValue(complex<double>* determinant, complex<double>* currentValue, i
 /*!	Записать величины полученных токов в выходной файл
 	\param[in] currentValue - массив значений токов в ветвях
 */
-void outputCurrentValues(complex<double>* currentValue, int branchCount);
+void outputCurrentValues(complex<double>* currentValue, int branchCount, string outputFile);
